@@ -1,12 +1,12 @@
 #include "GSO_KERNEL.H"
-#include "COMPATIBILITY/gso_exec.h" // لاستخدام مدير التنفيذ
+#include "COMPATIBILITY/gso_exec.h" // لاستخدام Execution Manager
 
 void gso_print(const char* message) {
     // وظيفة وهمية (Placeholder) للطباعة عبر Terminal Driver
     // سيتم تنفيذها لاحقاً
 }
 
-// دالة تهيئة النواة التي يتم استدعاؤها من GSOBOOT.EFI
+// دالة تهيئة الKernel التي يتم استدعاؤها من GSOBOOT.EFI
 void kernel_main(gso_ptr_t memory_map_ptr, gso_ptr_t screen_info_ptr) {
 
     // 1. تهيئة الشاشة (باستخدام بيانات GOP التي مررها Bootloader)
@@ -16,7 +16,7 @@ void kernel_main(gso_ptr_t memory_map_ptr, gso_ptr_t screen_info_ptr) {
     // 2. تهيئة إدارة الذاكرة
     gso_memory_init(memory_map_ptr);
     
-    // 3. تهيئة طبقة التوافق لـ GSO-EXEC
+    // 3. تهيئة Compatibility Layer لـ GSO-EXEC
     gso_exec_init();
     gso_print("GSO-EXEC Compatibility Layer initialized.\n");
 
@@ -24,7 +24,7 @@ void kernel_main(gso_ptr_t memory_map_ptr, gso_ptr_t screen_info_ptr) {
     // نستخدم صيغة GXE لغلاف GSO-DOS الأصلي
     gso_process_manager_start("A:\\GSO_SHELL.GXE");
 
-    // حلقة لا نهائية (النواة تعمل دائماً)
+    // حلقة لا نهائية (الKernel تعمل دائماً)
     while(1) {}
 }
 
